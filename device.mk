@@ -21,7 +21,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/fstab.armani:root/fstab.armani \
     $(LOCAL_PATH)/configs/ueventd.armani.rc:root/ueventd.armani.rc \
     $(LOCAL_PATH)/configs/init.armani.rc:root/init.armani.rc \
-    $(LOCAL_PATH)/configs/init.xiaomi.usb.rc:root/init.xiaomi.usb.rc
+    $(LOCAL_PATH)/configs/init.xiaomi.usb.rc:root/init.xiaomi.usb.rc \
+    $(LOCAL_PATH)/configs/twrp.fstab:recovery/root/etc/twrp.fstab
 
 # Keylayouts
 PRODUCT_COPY_FILES += \
@@ -37,7 +38,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/gps/gps.conf:system/etc/gps.conf \
     $(LOCAL_PATH)/configs/audio_policy.conf:system/etc/audio_policy.conf \
     $(LOCAL_PATH)/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/media_paths.xml:system/etc/media_paths.xml
 
 # Copy extra files
 PRODUCT_COPY_FILES += \
@@ -116,11 +118,24 @@ PRODUCT_PACKAGES += \
     librs_jni \
     com.android.future.usb.accessory
 
+# Keystore
+PRODUCT_PACKAGES += \
+    keystore.msm8226
+
 # Filesystem management tools
 PRODUCT_PACKAGES += \
     e2fsck
+
+PRODUCT_AAPT_CONFIG := large
+PRODUCT_AAPT_PREBUILT_DPI := xhdpi hdpi
+PRODUCT_AAPT_PREF_CONFIG := xhdpi
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sf.lcd_density=320
 
 # Platform specific properties
 #
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.qualcomm.bt.hci_transport=smd
+
+$(call inherit-product-if-exists, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
